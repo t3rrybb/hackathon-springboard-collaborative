@@ -1,16 +1,16 @@
 <mxfile host="65bd71144e">
     <diagram id="7b25uGzISGPKREv2pLF5" name="Page-1">
-        <mxGraphModel dx="1130" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1130" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="6" value="User (incomplete)" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
+                <mxCell id="6" value="user" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
                     <mxGeometry x="140" y="320" width="160" height="140" as="geometry"/>
                 </mxCell>
                 <mxCell id="7" value="- user_id (PK)&#10;- first_name&#10;- last_name&#10;- email&#10;- phone&#10;- status" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="6" vertex="1">
                     <mxGeometry y="30" width="160" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="ServiceProvider" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
+                <mxCell id="21" value="service-provider" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
                     <mxGeometry x="390" y="110" width="160" height="180" as="geometry"/>
                 </mxCell>
                 <mxCell id="22" value="- id (PK)&#10;- name&#10;- description&#10;- website&#10;- email&#10;- phone&#10;- status&#10;- services" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="21" vertex="1">
