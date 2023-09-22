@@ -1,14 +1,20 @@
 package org.springboard.service;
 
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
+import com.amazonaws.services.simpleemail.model.Body;
+import com.amazonaws.services.simpleemail.model.Content;
+import com.amazonaws.services.simpleemail.model.Destination;
+import com.amazonaws.services.simpleemail.model.Message;
+import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import org.springboard.dao.MailModelDAO;
 import org.springboard.dao.ServiceProviderDao;
 import org.springboard.model.MailModel;
 import org.springboard.model.ServiceProviderModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.commons.mail.SimpleEmail;
 import java.util.Objects;
-
+import com.amazonaws.regions.Regions;
+import com.amazonaws.regions.Region;
 import java.util.List;
 import java.util.Random;
 
@@ -68,17 +74,28 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
     @Override
     public void sendEmail(String msg, String to) {
+
+
+        String FROM = "pojotav205@alvisani.com";
+        String SUBJECT = "TSC Communication";
+        String CONFIGSET = "ConfigSet";
+
+        Destination destination = new Destination().withToAddresses(to);
+        Content subject = new Content().withData(SUBJECT);
+        Content bodyContent = new Content().withData(msg);
+        Body body = new Body().withText(bodyContent);
+        Message message = new Message().withSubject(subject).withBody(body);
+        SendEmailRequest request = new SendEmailRequest().withSource(FROM).withDestination(destination).withMessage(message);
         try {
-            SimpleEmail mail = new SimpleEmail();
-            mail.setMsg(msg);
-            mail.setHostName("local");
-            mail.setFrom("tsc-login-otp@no-reply.com");
-            mail.addTo(to);
-            mail.send();
-        } catch (Exception exception) {
-            System.err.println("Mail send failed to " + to);
+            AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient();
+            client.setRegion(Region.getRegion(Regions.US_EAST_1));
+            client.sendEmail(request);
+        } catch (Exception e) {
+            System.out.println("Unable to send email to " + to + " msg: " + msg + " : " + e.getMessage());
         }
-        
+
+
+
     }
 
     public void addMailModel(MailModel mailModel) {
@@ -95,9 +112,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         var newOtp = generateOTP(6);
         var stringBuilder = new StringBuilder();
         if (Objects.nonNull(existingMailModel)) {
-            existingMailModel.setOtp(newOtp);
+            //workaround for now
+            /*existingMailModel.setOtp(newOtp);
             addMailModel(existingMailModel);
-            stringBuilder.append("mail id already exists hence regenerated OTP");
+            stringBuilder.append("mail id already exists hence regenerated OTP");*/
         } else {
             MailModel mailModel = new MailModel(mailId, newOtp);
             addMailModel(mailModel);
@@ -113,7 +131,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         var stringBuilder = new StringBuilder();
         if (Objects.nonNull(mailModel) && otp.equals(mailModel.getOtp())) {
             stringBuilder.append("ACCEPTED");
-            mailModelDAO.delete(mailModel);
+            //mailModelDAO.delete(mailModel);
         }
         return stringBuilder.toString();
     }
