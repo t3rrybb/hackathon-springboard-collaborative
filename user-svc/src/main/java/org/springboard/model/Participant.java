@@ -31,11 +31,13 @@ public class Participant {
     List<String> need;
 
     List<String> referredTo;
+    
+    String role;
 
     public Participant(String id, String cabin, String firstName, String lastName,
-                       String email, String phone, Status status, String DOB,
+                       String email, String phone, Status status, String dob,
                        String comments, Map<String, String> subscribed, List<String> need,
-                       List<String> referredTo) {
+                       List<String> referredTo,String role) {
         this.id = id;
         this.cabin = cabin;
         this.firstName = firstName;
@@ -43,28 +45,31 @@ public class Participant {
         this.email = email;
         this.phone = phone;
         this.status = status;
-        this.dob = DOB;
+        this.dob = dob;
         this.comments = comments;
         this.subscribed = subscribed;
         this.need = need;
         this.referredTo = referredTo;
+        this.role = role;
 
     }
-
+    
     public Participant(String cabin, String firstName, String lastName, String email,
-                       String phone, Status status, String DOB, String comments,
-                       Map<String, String> subscribed, List<String> need, List<String> referredTo) {
+                       String phone, Status status, String dob, String comments,
+                       Map<String, String> subscribed, List<String> need, List<String> referredTo
+                       ,String role) {
         this.cabin = cabin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.status = status;
-        this.dob = DOB;
+        this.dob = dob;
         this.comments = comments;
         this.subscribed = subscribed;
         this.need = need;
         this.referredTo = referredTo;
+        this.role = role;
     }
 
     public Participant() {
@@ -118,6 +123,9 @@ public class Participant {
                 this.referredTo = updatedParticipantInfo.getReferredTo();
             }
         }
+        
+         if (Objects.nonNull(updatedParticipantInfo.getRole()))
+            this.role = updatedParticipantInfo.getRole();
 
         return this;
     }
@@ -231,6 +239,16 @@ public class Participant {
     public void setReferredTo(List<String> referredTo) {
         this.referredTo = referredTo;
     }
+    
+    @DynamoDBAttribute
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
 
     public enum Status {
         ACTIVE("ACTIVE"),

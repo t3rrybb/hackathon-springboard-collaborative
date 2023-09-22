@@ -48,7 +48,12 @@ public class ParticipantController {
     public  ResponseEntity<List<Participant>> getAllParticipant(){
         return new ResponseEntity<>(participantService.getAllParticipant(), HttpStatus.OK);
     }
-
+    
+    @PutMapping(value = "/user/refer/{id}/{serviceName}", consumes = "application/json")
+    public ResponseEntity<Participant> referParticipantToService(@PathVariable("id") final String id,@PathVariable("serviceName") final String serviceName){
+        var responseParticipant = participantService.referParticipantToService(id, serviceName);
+        return new ResponseEntity<>(responseParticipant, HttpStatus.OK);
+    }
 
     
 }

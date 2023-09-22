@@ -42,4 +42,11 @@ public class ParticipantService {
         }
         return null;
     }
+    
+    public Participant referParticipantToService(String id, String serviceName){
+        var participant = findParticipantById(id);
+        participant.getReferredTo().add(serviceName);
+        addParticipant(participant);
+        return participant;
+    }
 }
