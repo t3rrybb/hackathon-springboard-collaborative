@@ -1,8 +1,6 @@
 package org.springboard.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 @DynamoDBTable(tableName = "mailOTP")
 public class MailModel {
@@ -44,6 +42,7 @@ public class MailModel {
     
 
     @DynamoDBAttribute(attributeName = "USERTYPE")
+    @DynamoDBTypeConvertedEnum
     public UserType getUserType() {
         return userType;
     }
