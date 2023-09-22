@@ -25,10 +25,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
     @Override
-    public ServiceProvider updateServiceProviderById(ServiceProvider serviceProvider, String id) {
+    public ServiceProvider updateServiceProviderById(ServiceProvider newServiceProviderInfo, String id) {
         var oldServiceProviderInfo = findServiceProviderById(id);
-        if(Objects.isNull(oldServiceProviderInfo)) return addServiceProvider(oldServiceProviderInfo);
-        var updatedParticipantInfo = oldServiceProviderInfo.updateServiceProvider(oldServiceProviderInfo);
+        if(Objects.isNull(oldServiceProviderInfo)) return addServiceProvider(newServiceProviderInfo);
+        var updatedParticipantInfo = oldServiceProviderInfo.updateServiceProvider(newServiceProviderInfo);
         return addServiceProvider(updatedParticipantInfo);
     }
 

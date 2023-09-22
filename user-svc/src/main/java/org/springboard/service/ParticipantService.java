@@ -26,10 +26,10 @@ public class ParticipantService {
     }
 
 
-    public Participant updateParticipantById(Participant oldParticipant, String id){
+    public Participant updateParticipantById(Participant newParticipantInfo, String id){
         var oldParticipantInfo = findParticipantById(id);
-        if(Objects.isNull(oldParticipantInfo)) return addParticipant(oldParticipant);
-        var updatedParticipantInfo = oldParticipantInfo.updateParticipant(oldParticipant);
+        if(Objects.isNull(oldParticipantInfo)) return addParticipant(newParticipantInfo);
+        var updatedParticipantInfo = oldParticipantInfo.updateParticipant(newParticipantInfo);
         return addParticipant(updatedParticipantInfo);
     }
 
