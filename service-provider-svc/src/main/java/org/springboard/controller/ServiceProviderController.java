@@ -18,8 +18,8 @@ public class ServiceProviderController {
     @Autowired
     private ServiceProviderService serviceProviderService;
 
-    @Autowired
-    AmazonS3Client amazonS3Client;
+//    @Autowired
+//    AmazonS3Client amazonS3Client;
 
     @PostMapping(value = "/service-providers", consumes = "application/json")
     public ResponseEntity<ServiceProviderModel> addServiceProvider(@RequestBody ServiceProviderModel serviceProvider){
