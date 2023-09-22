@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springboard.model.MailModel;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,13 +18,18 @@ public class ServiceProviderController {
 
     @Autowired
     private ServiceProviderService serviceProviderService;
+    
+    @Autowired
+    private MailModelController mailModelController;
 
-//    @Autowired
-//    AmazonS3Client amazonS3Client;
 
     @PostMapping(value = "/service-providers", consumes = "application/json")
     public ResponseEntity<ServiceProviderModel> addServiceProvider(@RequestBody ServiceProviderModel serviceProvider){
         var RegisteredParticipant = serviceProviderService.addServiceProvider(serviceProvider);
+        mailModelController.addProfile(new MailModel(serviceProvider.getEmail()
+                                    ,null
+                                    ,serviceProvider.getId()
+                                    ,MailModel.UserType.SERVICE_PROVIDER));
         return new ResponseEntity<>(RegisteredParticipant, HttpStatus.OK);
     }
 

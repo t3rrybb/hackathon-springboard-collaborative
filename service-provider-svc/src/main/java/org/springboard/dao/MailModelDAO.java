@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface MailModelDAO extends CrudRepository<MailModel, String> {
 
     Optional<MailModel> findByMailId(String mailId);
+    
+    MailModel save(MailModel mailModel);
 
 }
