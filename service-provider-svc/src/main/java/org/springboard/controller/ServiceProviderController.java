@@ -1,6 +1,7 @@
 package org.springboard.controller;
 
-import org.springboard.model.ServiceProvider;
+import com.amazonaws.services.s3.AmazonS3Client;
+import org.springboard.model.ServiceProviderModel;
 import org.springboard.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,34 +18,37 @@ public class ServiceProviderController {
     @Autowired
     private ServiceProviderService serviceProviderService;
 
+    @Autowired
+    AmazonS3Client amazonS3Client;
+
     @PostMapping(value = "/service-providers", consumes = "application/json")
-    public ResponseEntity<ServiceProvider> addServiceProvider(@RequestBody ServiceProvider serviceProvider){
+    public ResponseEntity<ServiceProviderModel> addServiceProvider(@RequestBody ServiceProviderModel serviceProvider){
         var RegisteredParticipant = serviceProviderService.addServiceProvider(serviceProvider);
         return new ResponseEntity<>(RegisteredParticipant, HttpStatus.OK);
     }
 
     @GetMapping(value = "/service-providers/{id}")
-    public  ResponseEntity<ServiceProvider> findServiceProviderById(@PathVariable("id") final String id){
+    public  ResponseEntity<ServiceProviderModel> findServiceProviderById(@PathVariable("id") final String id){
         var participant = serviceProviderService.findServiceProviderById(id);
         if(Objects.isNull(participant)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(participant, HttpStatus.OK);
     }
 
     @PutMapping(value = "/service-providers/{id}", consumes = "application/json")
-    public ResponseEntity<ServiceProvider> updateServiceProviderById(@RequestBody ServiceProvider serviceProvider, @PathVariable("id") final String id){
+    public ResponseEntity<ServiceProviderModel> updateServiceProviderById(@RequestBody ServiceProviderModel serviceProvider, @PathVariable("id") final String id){
         var responseParticipant = serviceProviderService.updateServiceProviderById(serviceProvider, id);
         return new ResponseEntity<>(responseParticipant, HttpStatus.OK);
     }
 
     @DeleteMapping(value ="/service-providers/{id}")
-    public ResponseEntity<ServiceProvider> deleteServiceProviderById(@PathVariable("id") final String id){
+    public ResponseEntity<ServiceProviderModel> deleteServiceProviderById(@PathVariable("id") final String id){
         var participant = serviceProviderService.deleteServiceProviderById(id);
         if(Objects.isNull(participant)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(participant, HttpStatus.OK);
     }
     @GetMapping(value = "/service-providers/all", produces = { "application/json"})
-    public ResponseEntity<List<ServiceProvider>> getAllServiceProviders() {
-        ResponseEntity<List<ServiceProvider>> response = new ResponseEntity<>(serviceProviderService.getAllServiceProviders(), HttpStatus.OK);
+    public ResponseEntity<List<ServiceProviderModel>> getAllServiceProviders() {
+        ResponseEntity<List<ServiceProviderModel>> response = new ResponseEntity<>(serviceProviderService.getAllServiceProviders(), HttpStatus.OK);
         return response;
     }
 

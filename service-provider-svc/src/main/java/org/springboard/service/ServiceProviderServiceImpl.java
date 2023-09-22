@@ -3,7 +3,7 @@ package org.springboard.service;
 import org.springboard.dao.MailModelDAO;
 import org.springboard.dao.ServiceProviderDao;
 import org.springboard.model.MailModel;
-import org.springboard.model.ServiceProvider;
+import org.springboard.model.ServiceProviderModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.mail.SimpleEmail;
@@ -22,17 +22,17 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     private MailModelDAO mailModelDAO;
 
     @Override
-    public List<ServiceProvider> getAllServiceProviders() {
+    public List<ServiceProviderModel> getAllServiceProviders() {
         return serviceProviderDao.findAll();
     }
 
     @Override
-    public ServiceProvider findServiceProviderById(String id) {
+    public ServiceProviderModel findServiceProviderById(String id) {
         return serviceProviderDao.findById(id).orElse(null);
     }
 
     @Override
-    public ServiceProvider updateServiceProviderById(ServiceProvider newServiceProviderInfo, String id) {
+    public ServiceProviderModel updateServiceProviderById(ServiceProviderModel newServiceProviderInfo, String id) {
         var oldServiceProviderInfo = findServiceProviderById(id);
         if(Objects.isNull(oldServiceProviderInfo)) return addServiceProvider(newServiceProviderInfo);
         var updatedParticipantInfo = oldServiceProviderInfo.updateServiceProvider(newServiceProviderInfo);
@@ -40,7 +40,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
     @Override
-    public ServiceProvider deleteServiceProviderById(String id) {
+    public ServiceProviderModel deleteServiceProviderById(String id) {
         var serviceProvider = serviceProviderDao.findById(id);
         if(serviceProvider.isPresent()){
             serviceProvider.get().setActive(false);
@@ -51,7 +51,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
     @Override
-    public ServiceProvider addServiceProvider(ServiceProvider serviceProvider) {
+    public ServiceProviderModel addServiceProvider(ServiceProviderModel serviceProvider) {
         return serviceProviderDao.save(serviceProvider);
     }
 
