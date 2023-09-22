@@ -8,9 +8,9 @@ export function AuthProvider({ children }) {
    const [user, setUser] = useLocalStorage('user', null);
     if(user) {
         if(user.role === 'TSC'){
-            user.tabs = ['queue','users','add-user','add-provider','providers','participant-profile'];
+            user.tabs = ['queue','users','add-user','add-provider','providers'];
         }else if(user.role === 'Provider'){
-            user.tabs = ['users', 'providers'];
+            user.tabs = ['users', 'providers','provider-profile'];
         } else {
             user.tabs = ['providers','participant-profile'];
         }

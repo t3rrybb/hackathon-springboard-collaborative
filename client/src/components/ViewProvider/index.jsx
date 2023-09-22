@@ -19,17 +19,14 @@ const useStyles = createStyles((theme) => ({
 	},
 }));
 
-export function AddProvider() {
+export function ViewProvider() {
  const { classes } = useStyles();
  const {user} = useAuth();
- const { request } = useLoading();
-
-
 
   return (
     <>
       <Center>
-        <Title slot={2}>Add Providers</Title>
+        <Title slot={2}>Provider Profile</Title>
       </Center>
       <Card className={classes.card}>
         <Box className={classes.box}>

@@ -30,4 +30,7 @@ export const navLinks = [
   {
     link: '/participant-profile', label: 'participant-profile', icon: IconUserCircle, name: 'Profile'
   },
+  {
+    link: '/provider-profile', label: 'provider-profile', icon: IconUserCircle, name: 'Profile'
+  },
 ];
