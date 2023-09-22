@@ -16,5 +16,5 @@ public interface ServiceProviderDao extends CrudRepository<ServiceProviderModel,
 
     ServiceProviderModel save(ServiceProviderModel serviceProvider);
 
-
+    ServiceProviderModel findByName(String name);
 }

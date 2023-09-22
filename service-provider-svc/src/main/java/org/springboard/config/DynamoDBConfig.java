@@ -1,6 +1,8 @@
 package org.springboard.config;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,4 +18,8 @@ public class DynamoDBConfig {
         return AmazonDynamoDBClientBuilder.defaultClient();
     }
 
+    @Bean
+    public AmazonS3 amazonS3() {
+        return AmazonS3ClientBuilder.defaultClient();
+    }
 }

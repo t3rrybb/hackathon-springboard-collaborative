@@ -55,6 +55,16 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return serviceProviderDao.save(serviceProvider);
     }
 
+    @Override
+    public ServiceProviderModel updateServiceProviderByName(String name, String consentFormUrl) {
+        var existingServiceProviderModel = serviceProviderDao.findByName(name);
+        if (Objects.nonNull(existingServiceProviderModel)) {
+            existingServiceProviderModel.setConsentFormURL(consentFormUrl);
+            return addServiceProvider(existingServiceProviderModel);
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public void sendEmail(String msg, String to) {
@@ -74,7 +84,6 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     public void addMailModel(MailModel mailModel) {
         mailModelDAO.save(mailModel);
     }
-    
 
     public MailModel findMailModelByMailId(String mailId) {
         return mailModelDAO.findByMailId(mailId).orElse(null);
@@ -104,8 +113,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         var stringBuilder = new StringBuilder();
         if (Objects.nonNull(mailModel) && otp.equals(mailModel.getOtp())) {
             stringBuilder.append("ACCEPTED");
-            mailModel.setOtp("");
-            addMailModel(mailModel);
+            mailModelDAO.delete(mailModel);
         }
         return stringBuilder.toString();
     }

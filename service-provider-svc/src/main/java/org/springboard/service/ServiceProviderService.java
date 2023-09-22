@@ -15,6 +15,8 @@ public interface ServiceProviderService {
     public ServiceProviderModel deleteServiceProviderById(String id);
 
     public ServiceProviderModel addServiceProvider(ServiceProviderModel serviceProvider);
+
+    public ServiceProviderModel updateServiceProviderByName(String name, String consentFormUrl);
     
     public void sendEmail(String msg, String to);
 
