@@ -18,11 +18,9 @@ public class ServiceProviderController {
 
     @Autowired
     private ServiceProviderService service;
-    @GetMapping(value = "/service-providers", produces = { "application/json"})
+    @GetMapping(value = "/service-providers/all", produces = { "application/json"})
     public ResponseEntity<List<ServiceProvider>> getAllProviders() {
-
         ResponseEntity<List<ServiceProvider>> response = new ResponseEntity<>(service.getAllProviders(), HttpStatus.OK);
-
         return response;
     }
     

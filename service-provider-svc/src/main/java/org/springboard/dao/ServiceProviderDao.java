@@ -1,24 +1,19 @@
 package org.springboard.dao;
 
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springboard.model.ServiceProvider;
-import org.springframework.stereotype.Component;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-@Component
-public class ServiceProviderDao {
+@EnableScan
+public interface ServiceProviderDao extends CrudRepository<ServiceProvider, String> {
 
-    public List<ServiceProvider> getAll() {
+    Optional<ServiceProvider> findById(String id);
 
-        ServiceProvider p1 = new ServiceProvider();
-        p1.setId("001");
-        p1.setName("P1");
+    List<ServiceProvider> findAll();
 
-        ServiceProvider p2 = new ServiceProvider();
-        p2.setId("002");
-        p2.setName("P2");
+    List<ServiceProvider> findByActive(Boolean status);
 
-        return Arrays.asList(p1, p2);
-    }
 }
