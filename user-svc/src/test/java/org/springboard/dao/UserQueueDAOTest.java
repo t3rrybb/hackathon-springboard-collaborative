@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = ServiceApplication.class)
 @WebAppConfiguration
-@TestPropertySource(properties = {"amazon.aws.accesskey=AKIAWQRWDGA46XT7O5DT", "amazon.aws.secretkey=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" })
+@TestPropertySource(properties = {"amazon.aws.accesskey=AKIAWQRWDGA447VMO6N3", "amazon.aws.secretkey=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" })
 public class UserQueueDAOTest {
 
     private DynamoDBMapper dynamoDBMapper;
