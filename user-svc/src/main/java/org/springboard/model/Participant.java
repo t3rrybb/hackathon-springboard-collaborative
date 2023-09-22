@@ -2,6 +2,8 @@ package org.springboard.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
+import java.util.Objects;
+
 @DynamoDBTable(tableName = "participant")
 public class Participant {
 
@@ -42,12 +44,24 @@ public class Participant {
     }
 
     public Participant updateParticipant(Participant updatedParticipantInfo){
-        this.firstName = updatedParticipantInfo.getFirstName();
-        this.lastName = updatedParticipantInfo.getLastName();
-        this.email = updatedParticipantInfo.getEmail();
-        this.phone = updatedParticipantInfo.getPhone();
-        this.status = updatedParticipantInfo.getStatus();
-        this.DOB = updatedParticipantInfo.getDOB();
+        if(Objects.nonNull(updatedParticipantInfo.getFirstName()))
+            this.firstName = updatedParticipantInfo.getFirstName();
+
+        if(Objects.nonNull(updatedParticipantInfo.getLastName()))
+            this.lastName = updatedParticipantInfo.getLastName();
+
+        if(Objects.nonNull(updatedParticipantInfo.getEmail()))
+            this.email = updatedParticipantInfo.getEmail();
+
+        if(Objects.nonNull(updatedParticipantInfo.getPhone()))
+            this.phone = updatedParticipantInfo.getPhone();
+
+        if(Objects.nonNull(updatedParticipantInfo.getStatus()))
+            this.status = updatedParticipantInfo.getStatus();
+
+        if(Objects.nonNull(updatedParticipantInfo.getDOB()))
+            this.DOB = updatedParticipantInfo.getDOB();
+
         return this;
     }
 
