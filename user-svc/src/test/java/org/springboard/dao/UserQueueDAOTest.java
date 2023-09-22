@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 
+import com.amazonaws.services.dynamodbv2.util.TableUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,27 +46,30 @@ public class UserQueueDAOTest {
 
             CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(UserQueue.class);
 
-            tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+            tableRequest.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
 
             amazonDynamoDB.createTable(tableRequest);
+            TableUtils.createTableIfNotExists(amazonDynamoDB, tableRequest);
         } catch (ResourceInUseException e) {
             // Do nothing, table already created
         }
-
-        // TODO How to handle different environments. i.e. AVOID deleting all entries in BookInfo on table
-        dynamoDBMapper.batchDelete(userQueueDAO.findAll());
+        try {
+            //dynamoDBMapper.batchDelete(userQueueDAO.findAll());
+        } catch (Exception ex) {
+            // table might have been created just now
+        }
     }
 
     @Test
     public void insertSomeEntries() {
-        UserQueue user1 = new UserQueue(UserStatus.QUEUED, "Vikram", "12345678", "", "");
+        UserQueue user1 = new UserQueue(UserStatus.APPROVED, "T2", "12345", "", "");
         userQueueDAO.save(user1);
 
-        UserQueue user2 = new UserQueue(UserStatus.QUEUED, "Ashok", "123", "", "");
-        userQueueDAO.save(user2);
+        UserQueue user2 = new UserQueue(UserStatus.QUEUED, "Muhesh", "124", "", "");
+        //userQueueDAO.save(user2);
 
-        List<UserQueue> result = (List<UserQueue>) userQueueDAO.findAll();
+        List<UserQueue> result = userQueueDAO.findAll();
 
-        assertTrue( result.size() > 0 );
+        assertFalse(result.isEmpty());
     }
 }

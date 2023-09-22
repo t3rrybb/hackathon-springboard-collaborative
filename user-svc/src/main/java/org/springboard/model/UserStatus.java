@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum UserStatus {
     QUEUED("QUEUED"),
     APPROVED("APPROVED"),
-    REJECTED("REJECTED"),
-    RESIDENT("RESIDENT");
+    REJECTED("REJECTED");
 
     private final String state;
 }
