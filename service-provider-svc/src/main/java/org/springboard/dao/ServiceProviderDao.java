@@ -14,6 +14,7 @@ public interface ServiceProviderDao extends CrudRepository<ServiceProvider, Stri
 
     List<ServiceProvider> findAll();
 
-    List<ServiceProvider> findByActive(Boolean status);
+    ServiceProvider save(ServiceProvider serviceProvider);
+
 
 }
