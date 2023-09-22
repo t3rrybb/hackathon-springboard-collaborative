@@ -21,7 +21,10 @@ public class Participant {
 
     String DOB;
 
-    public Participant(String id, String firstName, String lastName, String email, String phone, Status status, String DOB) {
+    String comments;
+
+    public Participant(String id, String firstName, String lastName,
+                       String email, String phone, Status status, String DOB, String comments) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,15 +32,18 @@ public class Participant {
         this.phone = phone;
         this.status = status;
         this.DOB = DOB;
+        this.comments = comments;
     }
 
-    public Participant(String firstName, String lastName, String email, String phone, Status status, String DOB) {
+    public Participant(String firstName, String lastName, String email,
+                       String phone, Status status, String DOB, String comments) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.status = status;
         this.DOB = DOB;
+        this.comments = comments;
     }
 
     public Participant() {
@@ -61,6 +67,9 @@ public class Participant {
 
         if(Objects.nonNull(updatedParticipantInfo.getDOB()))
             this.DOB = updatedParticipantInfo.getDOB();
+
+        if (Objects.nonNull(updatedParticipantInfo.getComments()))
+            this.comments = updatedParticipantInfo.getComments();
 
         return this;
     }
@@ -128,6 +137,15 @@ public class Participant {
 
     public void setDOB(String DOB) {
         this.DOB = DOB;
+    }
+
+    @DynamoDBAttribute
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public enum Status {

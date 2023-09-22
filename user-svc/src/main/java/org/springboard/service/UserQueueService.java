@@ -31,7 +31,9 @@ public class UserQueueService {
 
     public List<UserQueue> findUsersWithSpecificStatus(String status) {
         List<UserQueue> userQueueList = new ArrayList<>(findUserWithStatus(status));
-        userQueueList.sort(Comparator.comparing(UserQueue::getCreatedDate));
+        if (!userQueueList.isEmpty()) {
+            userQueueList.sort(Comparator.comparing(UserQueue::getCreatedDate));
+        }
         return userQueueList;
     }
 

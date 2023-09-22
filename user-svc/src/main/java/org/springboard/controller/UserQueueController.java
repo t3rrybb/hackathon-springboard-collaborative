@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class UserQueueController {
@@ -15,30 +16,44 @@ public class UserQueueController {
     @Autowired
     UserQueueService userQueueService;
 
-    @RequestMapping(path="/userQueue", method=RequestMethod.GET)
-    public @ResponseBody List<UserQueue> findAll() {
-        return userQueueService.findAllUsers();
+    @GetMapping(path="/userQueue")
+    public @ResponseBody ResponseEntity<List<UserQueue>> findAll() {
+        return new ResponseEntity<>(userQueueService.findAllUsers(), HttpStatus.OK);
     }
 
-    @RequestMapping(path="/userQueue/{status}", method=RequestMethod.GET)
-    public @ResponseBody List<UserQueue> findAllQueuedUsers(@PathVariable("status") final String status) {
-        return userQueueService.findUsersWithSpecificStatus(status);
+    @GetMapping(path="/userQueue/{id}")
+    public @ResponseBody ResponseEntity<UserQueue> findUserById(@PathVariable("id") final String id) {
+        var queuedUser = userQueueService.findUserById(id);
+        if (Objects.isNull(queuedUser)) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(queuedUser, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/userQueue", consumes = "application/json")
+    @GetMapping(path="/userQueue/allUsers/{status}")
+    public @ResponseBody ResponseEntity<List<UserQueue>> findAllQueuedUsers(@PathVariable("status")
+                                                                                final String status) {
+        var queuedUsersList = userQueueService.findUsersWithSpecificStatus(status);
+        if (queuedUsersList.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(queuedUsersList, HttpStatus.OK);
+    }
+
+    @PostMapping(path="/userQueue", consumes = "application/json")
     public ResponseEntity<UserQueue> addUserQueue(@RequestBody UserQueue userQueue){
         var queuedUser = userQueueService.addUserQueueData(userQueue);
         return new ResponseEntity<>(queuedUser, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/userQueue/{id}", consumes = "application/json")
+    @PutMapping(path="/userQueue/{id}", consumes = "application/json")
     public ResponseEntity<String> updateQueuedUser(@RequestBody UserQueue userQueue,
                                                          @PathVariable("id") final String id){
         var queuedUser = userQueueService.updateQueuedUser(userQueue, id);
         return new ResponseEntity<>(queuedUser, HttpStatus.OK);
     }
 
-    @DeleteMapping(value ="/userQueue/{id}")
+    @DeleteMapping(path="/userQueue/{id}")
     public ResponseEntity<String> deleteQueuedUser(@PathVariable("id") final String id){
         var deletedQueuedUser = userQueueService.deleteQueuedUser(id);
         return new ResponseEntity<>(deletedQueuedUser, HttpStatus.OK);
