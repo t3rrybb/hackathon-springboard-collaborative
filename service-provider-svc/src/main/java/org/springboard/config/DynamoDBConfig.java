@@ -12,12 +12,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 @EnableDynamoDBRepositories(basePackages = "org.springboard.dao")
 public class DynamoDBConfig {
 
-    @Value("${amazon.aws.accesskey}")
-    private String accessKey;
-
-    @Value("${amazon.aws.secretkey}")
-    private String secretKey;
-
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
         return AmazonDynamoDBClientBuilder.defaultClient();
