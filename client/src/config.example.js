@@ -1,1 +1,2 @@
-export const BACKEND_URL = 'http://localhost:5005';
+export const USER_BACKEND_URL = '';
+export const AUTH_BACKEND_URL = '';
