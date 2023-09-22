@@ -2,6 +2,8 @@ package org.springboard.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "participant")
@@ -9,6 +11,7 @@ public class Participant {
 
     private String id;
 
+    String cabin;
     String firstName;
 
     String lastName;
@@ -19,57 +22,102 @@ public class Participant {
 
     Status status;
 
-    String DOB;
+    String dob;
 
     String comments;
 
-    public Participant(String id, String firstName, String lastName,
-                       String email, String phone, Status status, String DOB, String comments) {
+    Map<String, String> subscribed;
+
+    List<String> need;
+
+    List<String> referredTo;
+
+    public Participant(String id, String cabin, String firstName, String lastName,
+                       String email, String phone, Status status, String DOB,
+                       String comments, Map<String, String> subscribed, List<String> need,
+                       List<String> referredTo) {
         this.id = id;
+        this.cabin = cabin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.status = status;
-        this.DOB = DOB;
+        this.dob = DOB;
         this.comments = comments;
+        this.subscribed = subscribed;
+        this.need = need;
+        this.referredTo = referredTo;
+
     }
 
-    public Participant(String firstName, String lastName, String email,
-                       String phone, Status status, String DOB, String comments) {
+    public Participant(String cabin, String firstName, String lastName, String email,
+                       String phone, Status status, String DOB, String comments,
+                       Map<String, String> subscribed, List<String> need, List<String> referredTo) {
+        this.cabin = cabin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.status = status;
-        this.DOB = DOB;
+        this.dob = DOB;
         this.comments = comments;
+        this.subscribed = subscribed;
+        this.need = need;
+        this.referredTo = referredTo;
     }
 
     public Participant() {
     }
 
-    public Participant updateParticipant(Participant updatedParticipantInfo){
-        if(Objects.nonNull(updatedParticipantInfo.getFirstName()))
+    public Participant updateParticipant(Participant updatedParticipantInfo) {
+        if (Objects.nonNull(updatedParticipantInfo.getCabin()))
+            this.cabin = updatedParticipantInfo.getCabin();
+
+        if (Objects.nonNull(updatedParticipantInfo.getFirstName()))
             this.firstName = updatedParticipantInfo.getFirstName();
 
-        if(Objects.nonNull(updatedParticipantInfo.getLastName()))
+        if (Objects.nonNull(updatedParticipantInfo.getLastName()))
             this.lastName = updatedParticipantInfo.getLastName();
 
-        if(Objects.nonNull(updatedParticipantInfo.getEmail()))
+        if (Objects.nonNull(updatedParticipantInfo.getEmail()))
             this.email = updatedParticipantInfo.getEmail();
 
-        if(Objects.nonNull(updatedParticipantInfo.getPhone()))
+        if (Objects.nonNull(updatedParticipantInfo.getPhone()))
             this.phone = updatedParticipantInfo.getPhone();
 
-        if(Objects.nonNull(updatedParticipantInfo.getStatus()))
+        if (Objects.nonNull(updatedParticipantInfo.getStatus()))
             this.status = updatedParticipantInfo.getStatus();
 
-        if(Objects.nonNull(updatedParticipantInfo.getDOB()))
-            this.DOB = updatedParticipantInfo.getDOB();
+        if (Objects.nonNull(updatedParticipantInfo.getDob()))
+            this.dob = updatedParticipantInfo.getDob();
 
         if (Objects.nonNull(updatedParticipantInfo.getComments()))
             this.comments = updatedParticipantInfo.getComments();
+
+        if (Objects.nonNull(updatedParticipantInfo.getSubscribed())){
+            if(Objects.nonNull(this.subscribed)){
+                this.subscribed.putAll(updatedParticipantInfo.getSubscribed());
+            }else{
+                this.subscribed = updatedParticipantInfo.getSubscribed();
+            }
+        }
+
+        if (Objects.nonNull(updatedParticipantInfo.getNeed())){
+            if(Objects.nonNull(this.need)){
+                this.need.addAll(updatedParticipantInfo.getNeed());
+            }else{
+                this.need = updatedParticipantInfo.getNeed();
+            }
+        }
+
+        if (Objects.nonNull(updatedParticipantInfo.getReferredTo())){
+            if(Objects.nonNull(this.referredTo)){
+                this.referredTo.addAll(updatedParticipantInfo.getReferredTo());
+            }else{
+                this.referredTo = updatedParticipantInfo.getReferredTo();
+            }
+        }
 
         return this;
     }
@@ -131,12 +179,12 @@ public class Participant {
     }
 
     @DynamoDBAttribute
-    public String getDOB() {
-        return DOB;
+    public String getDob() {
+        return dob;
     }
 
-    public void setDOB(String DOB) {
-        this.DOB = DOB;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     @DynamoDBAttribute
@@ -146,6 +194,42 @@ public class Participant {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @DynamoDBAttribute
+    public String getCabin() {
+        return cabin;
+    }
+
+    public void setCabin(String cabin) {
+        this.cabin = cabin;
+    }
+
+    @DynamoDBAttribute
+    public Map<String, String> getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(Map<String, String> subscribed) {
+        this.subscribed = subscribed;
+    }
+
+    @DynamoDBAttribute
+    public List<String> getNeed() {
+        return need;
+    }
+
+    public void setNeed(List<String> need) {
+        this.need = need;
+    }
+
+    @DynamoDBAttribute
+    public List<String> getReferredTo() {
+        return referredTo;
+    }
+
+    public void setReferredTo(List<String> referredTo) {
+        this.referredTo = referredTo;
     }
 
     public enum Status {
@@ -158,6 +242,8 @@ public class Participant {
             return state;
         }
 
-        Status(String state) { this.state = state;}
+        Status(String state) {
+            this.state = state;
+        }
     }
 }
