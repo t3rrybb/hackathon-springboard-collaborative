@@ -5,6 +5,7 @@ import org.springboard.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -20,6 +21,10 @@ public class ParticipantService {
     public Participant getParticipant(String id){
         return participantDao.findById(id).orElse(null);
     }
+    public List<Participant> getAllParticipant(){
+        return participantDao.findAll();
+    }
+
 
     public Participant updateParticipant(Participant oldParticipant, String id){
         var oldParticipantInfo = getParticipant(id);
