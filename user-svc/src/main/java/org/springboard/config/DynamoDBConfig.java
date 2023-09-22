@@ -11,8 +11,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 
 @Configuration
-//give dao packages here
-//@EnableDynamoDBRepositories(basePackages = "")
+@EnableDynamoDBRepositories(basePackages = "org.springboard.dao")
 public class DynamoDBConfig {
 
     @Value("${amazon.aws.accesskey}")
@@ -24,7 +23,8 @@ public class DynamoDBConfig {
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
         return AmazonDynamoDBClientBuilder.standard().withCredentials(
-                new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey))).build();
+                new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
+                .withRegion("us-east-1").build();
     }
 
 }
