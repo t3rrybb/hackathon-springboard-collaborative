@@ -12,10 +12,10 @@ import java.util.List;
 public class ServiceProviderServiceImpl implements ServiceProviderService {
 
     @Autowired
-    private ServiceProviderDao dao;
+    private ServiceProviderDao serviceProviderDao;
     @Override
     public List<ServiceProvider> getAllProviders() {
-        return dao.getAll();
+        return serviceProviderDao.findAll();
     }
     
     @Override
