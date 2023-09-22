@@ -1,19 +1,26 @@
 package org.springboard.service;
 
+import org.springboard.dao.MailModelDAO;
 import org.springboard.dao.ServiceProviderDao;
+import org.springboard.model.MailModel;
 import org.springboard.model.ServiceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.mail.SimpleEmail;
+import java.util.Objects;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Random;
 
 @Service
 public class ServiceProviderServiceImpl implements ServiceProviderService {
 
     @Autowired
     private ServiceProviderDao serviceProviderDao;
+
+    @Autowired
+    private MailModelDAO mailModelDAO;
+
     @Override
     public List<ServiceProvider> getAllServiceProviders() {
         return serviceProviderDao.findAll();
@@ -48,6 +55,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return serviceProviderDao.save(serviceProvider);
     }
 
+
     @Override
     public void sendEmail(String msg, String to) {
         try {
@@ -61,5 +69,51 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
             System.err.println("Mail send failed to " + to);
         }
         
+    }
+
+    public void addMailModel(MailModel mailModel) {
+        mailModelDAO.save(mailModel);
+    }
+
+    public MailModel findMailModelByMailId(String mailId) {
+        return mailModelDAO.findByMailId(mailId).orElse(null);
+    }
+
+    @Override
+    public String generateOtpAndSave(String mailId) {
+        var existingMailModel = findMailModelByMailId(mailId);
+        var newOtp = generateOTP(6);
+        var stringBuilder = new StringBuilder();
+        if (Objects.nonNull(existingMailModel)) {
+            existingMailModel.setOtp(newOtp);
+            addMailModel(existingMailModel);
+            stringBuilder.append("mail id already exists hence regenerated OTP");
+        } else {
+            MailModel mailModel = new MailModel(mailId, newOtp);
+            addMailModel(mailModel);
+            stringBuilder.append("new OTP generated successfully");
+        }
+        return stringBuilder.toString();
+    }
+
+    @Override
+    public String validateOtpAndDelete(String mailId, String otp) {
+        var mailModel = findMailModelByMailId(mailId);
+        var stringBuilder = new StringBuilder();
+        if (Objects.nonNull(mailModel) && otp.equals(mailModel.getOtp())) {
+            stringBuilder.append("ACCEPTED");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String generateOTP(int len) {
+        String numbers = "0123456789";
+
+        Random random = new Random();
+        char[] otp = new char[len];
+        for (int i = 0; i < len; i++) {
+            otp[i] = numbers.charAt(random.nextInt(numbers.length()));
+        }
+        return new String(otp);
     }
 }

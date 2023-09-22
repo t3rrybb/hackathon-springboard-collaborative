@@ -17,6 +17,10 @@ public class UserQueueService {
     @Autowired
     UserQueueDAO userQueueDAO;
 
+    public UserQueue addUserQueueData(UserQueue userQueue) {
+        return userQueueDAO.save(userQueue);
+    }
+
     public UserQueue findUserById(String id) {
         return userQueueDAO.findById(id).orElse(null);
     }
@@ -35,10 +39,6 @@ public class UserQueueService {
             userQueueList.sort(Comparator.comparing(UserQueue::getCreatedDate));
         }
         return userQueueList;
-    }
-
-    public UserQueue addUserQueueData(UserQueue userQueue) {
-        return userQueueDAO.save(userQueue);
     }
 
     public String updateQueuedUser(UserQueue queuedUser, String id) {
