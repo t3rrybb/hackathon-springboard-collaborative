@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Auth } from '../components/Auth';
 
-export function AuthPageContainer() {
+export function AuthPageContainer({child}) {
   const location = useLocation();
   useEffect(() => {
     window.gtag('event', 'page_view', {
@@ -13,7 +12,7 @@ export function AuthPageContainer() {
   }, [location]);
   return (
     <div>
-      <Auth />
+      {child}
     </div>
   );
 }

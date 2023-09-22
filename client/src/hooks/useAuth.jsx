@@ -17,7 +17,7 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useLocalStorage('user', {tabs: ['queue']});
-  user.tabs = ['queue','users'];
+  user.tabs = ['queue','users','add-user','add-provider'];
   const navigate = useNavigate();
   const { request } = useLoading();
 
