@@ -93,6 +93,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
             addMailModel(mailModel);
             stringBuilder.append("new OTP generated successfully");
         }
+        sendEmail(newOtp, mailId);
         return stringBuilder.toString();
     }
 
