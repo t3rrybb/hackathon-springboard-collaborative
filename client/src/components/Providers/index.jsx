@@ -1,13 +1,6 @@
 import {
 	createStyles,
-	Card,
-	List,
 	Accordion,
-	Button,
-	Group,
-	Flex,
-	Space,
-	Container,
 	Center,
     Box,
     Title,
@@ -15,10 +8,10 @@ import {
     Avatar,
 } from "@mantine/core";
 
-import {  IconList, IconDoor, IconCalendar, IconMail,IconPhone} from '@tabler/icons-react';
+import {  IconDoor, IconMail,IconPhone} from '@tabler/icons-react';
 import { useLoading } from "../../hooks/useLoading";
 import { useEffect, useState } from "react";
-import { getUsers } from "../../utils/requests";
+import { getProviders } from "../../utils/requests";
 
 const useStyles = createStyles((theme) => ({
 	list: {
@@ -71,14 +64,14 @@ const useStyles = createStyles((theme) => ({
 // 		phonenumber: "9790546297",
 // 	},
 // ];
-export function Users() {
+export function Providers() {
 	const { classes } = useStyles();
     const [data, setData] = useState([]);
     const { request } = useLoading();
 
     const getData = async () => {
         try {
-          const response = await request(getUsers);
+          const response = await request(getProviders);
           if (response.status === 200) {
             console.log(response.data)
             setData(response.data);
@@ -96,7 +89,7 @@ export function Users() {
 
 	return (
         <>
-      <Center> <Title>Enrolled Users</Title> </Center> 
+      <Center> <Title>Enrolled Providers</Title> </Center> 
 		{data.length>0 ?<Accordion 
         variant="separated"
         defaultValue={data[0].email} className={classes.list}>
@@ -112,15 +105,15 @@ export function Users() {
 								mt="md"
 								mb="xs"
 							>
-                                <Avatar size="xl"  radius="xl" color="indigo" >{element.firstName.charAt(0)}</Avatar>
+                                <Avatar size="xl"  radius="xl" color="indigo" >{element.name === null?'U': element.name.charAt(0)}</Avatar>
                                 
 								<Box className={classes.bigDet}  ml={20}>
                                  
-                                    <Title order={3}>{element.firstName} {element.lastName}</Title>
+                                    <Title order={3}>{element.name}</Title>
                                     <Box className={classes.profile}>
                                         <Box className={classes.det} size="sm" c="dimmed">
                                             <IconDoor/>
-                                            {element.cabin}
+                                            {element.website}
                                         </Box>
                                         <Anchor ml={20}  href={`telto:${element.email}`}  className={classes.det}  size="sm" c="dimmed">
                                         <IconPhone/>
@@ -139,17 +132,8 @@ export function Users() {
 								
 							</Box>
                              </Accordion.Control>
-                            <Accordion.Panel>
-                            <Flex className={classes.buttons} gap="md" >
-                              <Box className={classes.det} size="sm" c="dimmed">
-                                    <IconCalendar/>
-									16/09/2001
-								</Box>
-                                <Box className={classes.det} size="sm" c="dimmed">
-                                    <IconList/>
-									{element.subscribed}
-								</Box>
-							</Flex>
+                            <Accordion.Panel>        
+							    {element.description}
                             </Accordion.Panel>						
                             </Accordion.Item>
                  </Center>

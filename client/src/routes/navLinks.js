@@ -3,7 +3,9 @@ import {
   IconForms,
   IconUsers,
   IconPlus,
-  IconUserPlus
+  IconUserPlus,
+  IconBuildingCommunity,
+  IconUserCircle
 } from '@tabler/icons';
 
 export const navLinks = [
@@ -21,5 +23,11 @@ export const navLinks = [
   },
   {
     link: '/add-provider', label: 'add-provider', icon: IconPlus, name: 'Add Provider'
+  },
+  {
+    link: '/providers', label: 'providers', icon: IconBuildingCommunity, name: 'Providers'
+  },
+  {
+    link: '/participant-profile', label: 'participant-profile', icon: IconUserCircle, name: 'Profile'
   },
 ];

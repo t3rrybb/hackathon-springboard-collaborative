@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { HeaderNav } from '../Header';
 import { useNavigate } from 'react-router-dom';
 import { addApplicants } from '../../utils/requests';
+import { useLoading } from '../../hooks/useLoading';
+import { notifications } from '@mantine/notifications';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -30,6 +32,7 @@ export function Form() {
     const [mobileNumber, setMobileNumber] = useState('');
     const [checked, setChecked] = useState(false);
     const navigate = useNavigate();
+    const { request } = useLoading();
 
     const handleSubmit = async () =>  {
         try {
@@ -47,6 +50,11 @@ export function Form() {
             }
           } catch (error) {
             console.log(error);
+            notifications.show({
+                title: 'failed',
+                color: 'red',
+                message: 'Participant adding Failed'
+              });
           }
       };
     
@@ -95,7 +103,7 @@ export function Form() {
               checked={checked}
             />
           </Group>
-          <Button onClick={handleSubmit} fullWidth mt="xl" disabled={!checked}>
+          <Button onClick={()=>handleSubmit()} fullWidth mt="xl" disabled={!checked}>
             Submit
           </Button>
         </Paper>

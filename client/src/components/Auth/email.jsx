@@ -3,14 +3,31 @@ import {
     Button,
   } from '@mantine/core';
 import { useState } from 'react';
- 
+import { useLoading } from '../../hooks/useLoading';
+import { sendOTP } from '../../utils/requests';
+
 export function Email(props) { 
 
    const [isValid, setIsValid]=useState(false);
+   const { request } = useLoading();
 
-   const onSubmit = () => {
-      props.setStage(1);
-    }
+    const handleSubmit = async () =>  {
+        try {
+            const response = await request(() => sendOTP({
+                mail: props.email
+            }));
+            if (response.status === 200) {
+             props.setStage(1);
+              notifications.show({
+                title: 'Success',
+                color: 'teal',
+                message: 'OTP sent successfully'
+              });
+            }
+          } catch (error) {
+            console.log(error);
+          }
+      };
 
     const onChange = (event) => {
         props.setEmail(event.currentTarget.value);
@@ -23,7 +40,7 @@ export function Email(props) {
         <TextInput
         onChange={onChange}
         value={props.email} label="Email" placeholder="me@mantine.dev" required />
-        <Button fullWidth mt="xl" onClick={onSubmit} disabled={!isValid}>
+        <Button fullWidth mt="xl" onClick={handleSubmit} disabled={!isValid}>
         Send OTP
         </Button>
        </>

@@ -4,13 +4,14 @@ import { GeneralPageContainer } from '../containers/GeneralPageContainer';
 import { AuthPageContainer } from '../containers/AuthPageContainer';
 import { LandingPageContainer } from '../containers/LandingPageContainer';
 
-import { Homepage } from '../components/Home';
 import { Form } from '../components/Form';
 import { Auth } from '../components/Auth';
 import { ApplicationQueue } from '../components/Applications';
 import { Users } from '../components/Users';
 import { AddUser } from '../components/AddUser';
 import { AddProvider } from '../components/AddProvider';
+import { ViewUser } from '../components/ViewUser';
+import { Providers } from '../components/Providers';
 
 export const publicRoutes = [
   {
@@ -31,12 +32,6 @@ export const publicRoutes = [
 ];
 
 export const privateRoutes = [
-  {
-    url: '/home',
-    component: <GeneralPageContainer child={<Homepage />} name="Dashboard" />,
-    name: 'HomePageContainer',
-    label: 'home'
-  },
   {
     url: '/applications',
     component: <GeneralPageContainer child={<ApplicationQueue />} name="Queue" />,
@@ -60,5 +55,17 @@ export const privateRoutes = [
     component: <GeneralPageContainer child={<AddProvider />} name="Add" />,
     name: 'AddProviderPageContainer',
     label: 'add-provider'
+  },
+  {
+    url: '/participant-profile',
+    component: <GeneralPageContainer child={<ViewUser />} name="Add" />,
+    name: 'AddProviderPageContainer',
+    label: 'participant-profile'
+  },
+  {
+    url: '/providers',
+    component: <GeneralPageContainer child={<Providers />} name="Providers" />,
+    name: 'ProviderPageContainer',
+    label: 'providers'
   }
 ];

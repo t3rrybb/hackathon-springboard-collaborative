@@ -1,4 +1,4 @@
-import { createStyles, Card, Box, TextInput, Center, Title, Button, NumberInput } from '@mantine/core';
+import { createStyles, Card, Box, TextInput, Center, Title, Button, NumberInput, MultiSelect } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { notifications } from '@mantine/notifications';
 import { useState } from 'react';
@@ -27,8 +27,9 @@ export function AddUser() {
  const [lastName, setLastName] = useState('');
  const [email, setEmail] = useState('');
  const [phone, setMobileNumber] = useState('');
- const [dateOfBirth, setDateOfBirth] = useState('');
- const [cabinNumber, setCabinNumber] = useState(0);
+ const [dob, setDateOfBirth] = useState('');
+ const [cabin, setCabinNumber] = useState('');
+ const [need, setNeed] = useState([]);
 
  const { request } = useLoading();
 
@@ -39,7 +40,9 @@ export function AddUser() {
             lastName,
             email,
             phone,
-            dateOfBirth
+            dob,
+            cabin,
+            need
         }));
         if (response.status === 200) {
           notifications.show({
@@ -91,16 +94,24 @@ export function AddUser() {
         mt={10}
         label="Date of Birth"
         placeholder='16/09/1999'
-        value={dateOfBirth}
+        value={dob}
         valueFormat="DD/MM/YYYY"
         onChange={(value) => setDateOfBirth(value)}
       />
+      <MultiSelect
+            mt={10}
+            label="Services Needed"
+            placeholder="Pick Service"
+            data={['employment','mental health','medical care','life skills', 'elderly']}
+            value={need}
+            onChange={(value) => setNeed(value)}
+        />
       <NumberInput
          mt={10}
          label="Cabin Number"
          placeholder='1'
          min={1}
-         value={cabinNumber}
+         value={cabin}
          onChange={(event) => setCabinNumber(event)}
       />
       <Button fullWidth mt="xl" onClick={handleSubmit}>Submit</Button>

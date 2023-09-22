@@ -1,5 +1,7 @@
-import { createStyles, Card, Box, TextInput, Center, Title, Button, MultiSelect, FileButton, Group } from '@mantine/core';
+import { createStyles, Card, Box, TextInput, Center, Title, Button, MultiSelect, FileButton, Group, Text } from '@mantine/core';
 import { useState } from 'react';
+import { useLoading } from '../../hooks/useLoading';
+import { addProviders, uploadFile } from '../../utils/requests';
 
 const useStyles = createStyles((theme) => ({
 	card: {
@@ -19,35 +21,72 @@ const useStyles = createStyles((theme) => ({
 export function AddProvider() {
  const { classes } = useStyles();
  const [name, setName] = useState('');
+ const [website, setWebSite] = useState('');
  const [description, setDescription] = useState('');
  const [email, setEmail] = useState('');
  const [mobileNumber, setMobileNumber] = useState('');
  const [servicesProvided, setServicesProvided] = useState([]);
  const [file, setFile] = useState(null);
+ const { request } = useLoading();
 
  const isFormValid = () => {
     return name && description && email && mobileNumber && servicesProvided.length > 0 && file;
   };
 
- const handleSubmit = () => {
-    if (isFormValid()) {
-      // Submit the form data
-      console.log('Name:', name);
-      console.log('Description:', description);
-      console.log('Email:', email);
-      console.log('Mobile Number:', mobileNumber);
-      console.log('Services Provided:', servicesProvided);
-      console.log('File:', file);
-
-      // Reset the form fields if needed
-      setName('');
-      setDescription('');
-      setEmail('');
-      setMobileNumber('');
-      setServicesProvided([]);
-      setFile(null);
+  const handleFileUpload = async (name) => {
+    if (file) {
+      const formData = new FormData();
+      formData.append('consentFile', file);
+      try {
+        const response = await request(() => uploadFile({
+            name,
+            formData
+        }));
+        if (response.status === 200) {
+          notifications.show({
+            title: 'Success',
+            color: 'teal',
+            message: 'File uploaded successfully'
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        if (response.status === 200) {
+            notifications.show({
+              title: 'Failed',
+              color: 'red',
+              message: 'File upload Failed'
+            });
+          }
+      }
     }
   };
+
+
+
+ const handleSubmit = async () => {
+    if (isFormValid()) {
+           try {
+               const response = await request(() => addProviders({
+                   name,
+                   website,
+                   email,
+                   mobileNumber,
+                   servicesProvided,
+               }));
+               if (response.status === 200) {
+                handleFileUpload(name);
+                 notifications.show({
+                   title: 'Success',
+                   color: 'teal',
+                   message: 'Participant added successfully'
+                 });
+               }
+             } catch (error) {
+               console.log(error);
+             }
+         };
+    };
 
   return (
     <>
@@ -62,6 +101,13 @@ export function AddProvider() {
             placeholder='Organisation Name'
             value={name}
             onChange={(event) => setName(event.target.value)}
+          />
+        <TextInput
+            mt={10}
+            label="Website"
+            placeholder='www.website.com'
+            value={website}
+            onChange={(event) => setWebSite(event.target.value)}
           />
           <TextInput
             mt={10}
@@ -88,7 +134,7 @@ export function AddProvider() {
             mt={10}
             label="Services Provided"
             placeholder="Pick Service"
-            data={['React', 'Angular', 'Vue', 'Svelte']}
+            data={['employment','mental health','medical care','life skills', 'elderly']}
             value={servicesProvided}
             onChange={(value) => setServicesProvided(value)}
           />

@@ -52,7 +52,7 @@ function Switches() {
           key={route.url}
         />
       ))}
-      {/* {user &&  */
+      {user &&  
       privateRoutes.filter((item) => user.tabs.includes(item.label)).map((route) => (
         <Route
           path={route.url}

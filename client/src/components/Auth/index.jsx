@@ -6,11 +6,13 @@ import {
   Container,
   Anchor,
 } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Email } from './email';
 import { OTP } from './otp';
 import { HeaderNav } from '../Header';
 import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { navLinks } from '../../routes/navLinks';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -35,10 +37,17 @@ const useStyles = createStyles((theme) => ({
 
 export function Auth() {
     const { classes } = useStyles();
+    const [user, setUser] = useLocalStorage('user', null);
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
     const [stage, setStage] = useState(0);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+          navigate(navLinks.filter((link) => link.label === user.tabs[0])[0].link);
+        }
+      }, [user, navigate]);
 
     return (
         <>
@@ -61,7 +70,11 @@ export function Auth() {
                 <Email email={email} 
                 setEmail={setEmail} 
                 setStage={setStage}/>:
-                <OTP otp={otp} setOtp={setOtp}/>
+                <OTP email={email} 
+                otp={otp} 
+                navigate={navigate}
+                setOtp={setOtp}
+                setUser={setUser}/>
             }
         </Paper>
         </Container>
