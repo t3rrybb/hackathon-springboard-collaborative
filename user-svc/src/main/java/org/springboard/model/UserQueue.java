@@ -9,9 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@DynamoDBTable(tableName="ParticipantQueue")
+@DynamoDBTable(tableName="UserQueue")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class UserQueue {
@@ -34,4 +33,12 @@ public class UserQueue {
 
     @DynamoDBAttribute
     private String comments;
+
+    public UserQueue(UserStatus status, String name, String mobileNumber, String email, String comments) {
+        this.status = status;
+        this.name = name;
+        this.mobileNumber = mobileNumber;
+        this.email = email;
+        this.comments = comments;
+    }
 }
