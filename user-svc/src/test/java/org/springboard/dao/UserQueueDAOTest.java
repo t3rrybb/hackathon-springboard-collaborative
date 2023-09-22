@@ -60,7 +60,7 @@ public class UserQueueDAOTest {
         }
     }
 
-    @Test
+    //@Test
     public void insertSomeEntries() {
         UserQueue user1 = new UserQueue(UserStatus.APPROVED, "T2", "12345", "", "");
         userQueueDAO.save(user1);

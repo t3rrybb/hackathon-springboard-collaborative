@@ -1,13 +1,14 @@
 package org.springboard.controller;
 
-import com.amazonaws.services.s3.AmazonS3Client;
 import org.springboard.model.ServiceProviderModel;
+import org.springboard.service.S3FileService;
 import org.springboard.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springboard.model.MailModel;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,10 +19,12 @@ public class ServiceProviderController {
 
     @Autowired
     private ServiceProviderService serviceProviderService;
-    
+
     @Autowired
     private MailModelController mailModelController;
 
+    @Autowired
+    S3FileService s3FileService;
 
     @PostMapping(value = "/service-providers", consumes = "application/json")
     public ResponseEntity<ServiceProviderModel> addServiceProvider(@RequestBody ServiceProviderModel serviceProvider){
@@ -78,5 +81,17 @@ public class ServiceProviderController {
         } else {
             return new ResponseEntity<>(HttpStatus.valueOf("WRONG PASSWORD"));
         }
+    }
+
+    @PutMapping(value = "/service-providers/{service-provider-name}")
+    public ResponseEntity<String> uploadConsentFile(@RequestParam("consentFile") MultipartFile multipartFile,
+                                                    @PathVariable("service-provider-name") final String serviceProviderName) {
+        var urlResponse = s3FileService.saveFile(multipartFile, serviceProviderName);
+        var consentUrlUpdatedServiceModel = serviceProviderService.updateServiceProviderByName(serviceProviderName,
+                urlResponse);
+        if (Objects.nonNull(consentUrlUpdatedServiceModel)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 }
