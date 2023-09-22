@@ -5,7 +5,7 @@ import { useLocalStorage } from './useLocalStorage';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-   const [user, setUser] = useLocalStorage('user', null);
+   const [user, setUser] = useLocalStorage('user', {role:'TSC'});
     if(user) {
         if(user.role === 'TSC'){
             user.tabs = ['queue','users','add-user','add-provider','providers'];

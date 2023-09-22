@@ -1,7 +1,4 @@
 import { createStyles, Card, Box, TextInput, Center, Title, Button, MultiSelect, FileButton, Group, Text } from '@mantine/core';
-import { useState } from 'react';
-import { useLoading } from '../../hooks/useLoading';
-import { addProviders, uploadFile } from '../../utils/requests';
 import { useAuth } from '../../hooks/useAuth';
 
 const useStyles = createStyles((theme) => ({

@@ -12,6 +12,7 @@ import { AddUser } from '../components/AddUser';
 import { AddProvider } from '../components/AddProvider';
 import { ViewUser } from '../components/ViewUser';
 import { Providers } from '../components/Providers';
+import { ViewProvider } from '../components/ViewProvider';
 
 export const publicRoutes = [
   {
@@ -61,6 +62,12 @@ export const privateRoutes = [
     component: <GeneralPageContainer child={<ViewUser />} name="Add" />,
     name: 'AddProviderPageContainer',
     label: 'participant-profile'
+  },
+  {
+    url: '/provider-profile',
+    component: <GeneralPageContainer child={<ViewProvider />} name="Add" />,
+    name: 'AddProviderPageContainer',
+    label: 'provider-profile'
   },
   {
     url: '/providers',
