@@ -1,17 +1,11 @@
 package org.springboard.controller;
 
 import org.springboard.model.UserQueue;
+import org.springboard.service.UserQueueService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springboard.dao.UserQueueDAO;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,10 +13,34 @@ import java.util.List;
 public class UserQueueController {
 
     @Autowired
-    UserQueueDAO userQueueDAO;
+    UserQueueService userQueueService;
 
-    @RequestMapping(path="/userQueue/allUsers", method=RequestMethod.GET)
+    @RequestMapping(path="/userQueue", method=RequestMethod.GET)
     public @ResponseBody List<UserQueue> findAll() {
-        return userQueueDAO.findAll();
+        return userQueueService.findAllUsers();
+    }
+
+    @RequestMapping(path="/userQueue/{status}", method=RequestMethod.GET)
+    public @ResponseBody List<UserQueue> findAllQueuedUsers(@PathVariable("status") final String status) {
+        return userQueueService.findUsersWithSpecificStatus(status);
+    }
+
+    @PostMapping(value = "/userQueue", consumes = "application/json")
+    public ResponseEntity<UserQueue> addUserQueue(@RequestBody UserQueue userQueue){
+        var queuedUser = userQueueService.addUserQueueData(userQueue);
+        return new ResponseEntity<>(queuedUser, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/userQueue/{id}", consumes = "application/json")
+    public ResponseEntity<String> updateQueuedUser(@RequestBody UserQueue userQueue,
+                                                         @PathVariable("id") final String id){
+        var queuedUser = userQueueService.updateQueuedUser(userQueue, id);
+        return new ResponseEntity<>(queuedUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value ="/userQueue/{id}")
+    public ResponseEntity<String> deleteQueuedUser(@PathVariable("id") final String id){
+        var deletedQueuedUser = userQueueService.deleteQueuedUser(id);
+        return new ResponseEntity<>(deletedQueuedUser, HttpStatus.OK);
     }
 }
