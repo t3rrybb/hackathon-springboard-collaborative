@@ -18,7 +18,7 @@ public class ParticipantService {
     public Participant addParticipant(Participant participant){
         return participantDao.save(participant);
     }
-    public Participant getParticipant(String id){
+    public Participant findParticipantById(String id){
         return participantDao.findById(id).orElse(null);
     }
     public List<Participant> getAllParticipant(){
@@ -26,14 +26,14 @@ public class ParticipantService {
     }
 
 
-    public Participant updateParticipant(Participant oldParticipant, String id){
-        var oldParticipantInfo = getParticipant(id);
+    public Participant updateParticipantById(Participant oldParticipant, String id){
+        var oldParticipantInfo = findParticipantById(id);
         if(Objects.isNull(oldParticipantInfo)) return addParticipant(oldParticipant);
         var updatedParticipantInfo = oldParticipantInfo.updateParticipant(oldParticipant);
         return addParticipant(updatedParticipantInfo);
     }
 
-    public Participant deleteParticipant(String id){
+    public Participant deleteParticipantById(String id){
         var participant = participantDao.findById(id);
         if(participant.isPresent()){
             participant.get().setStatus(Participant.Status.INACTIVE);

@@ -24,27 +24,27 @@ public class ParticipantController {
 
 
     @GetMapping(value = "/user/{id}")
-    public  ResponseEntity<Participant> getParticipant(@PathVariable("id") final String id){
-        var participant = participantService.getParticipant(id);
+    public  ResponseEntity<Participant> findParticipantById(@PathVariable("id") final String id){
+        var participant = participantService.findParticipantById(id);
         if(Objects.isNull(participant)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(participant, HttpStatus.OK);
     }
 
     @PutMapping(value = "/user/{id}", consumes = "application/json")
-    public ResponseEntity<Participant> updateParticipant(@RequestBody Participant participant, @PathVariable("id") final String id){
-        var responseParticipant = participantService.updateParticipant(participant, id);
+    public ResponseEntity<Participant> updateParticipantById(@RequestBody Participant participant, @PathVariable("id") final String id){
+        var responseParticipant = participantService.updateParticipantById(participant, id);
         return new ResponseEntity<>(responseParticipant, HttpStatus.OK);
     }
 
     @DeleteMapping(value ="/user/{id}")
-    public ResponseEntity<Participant> deleteParticipant(@PathVariable("id") final String id){
-        var participant = participantService.deleteParticipant(id);
+    public ResponseEntity<Participant> deleteParticipantById(@PathVariable("id") final String id){
+        var participant = participantService.deleteParticipantById(id);
         if(Objects.isNull(participant)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(participant, HttpStatus.OK);
     }
 
     @GetMapping(value = "/user/all")
-    public  ResponseEntity<List<Participant>> getParticipant(){
+    public  ResponseEntity<List<Participant>> getAllParticipant(){
         return new ResponseEntity<>(participantService.getAllParticipant(), HttpStatus.OK);
     }
 
