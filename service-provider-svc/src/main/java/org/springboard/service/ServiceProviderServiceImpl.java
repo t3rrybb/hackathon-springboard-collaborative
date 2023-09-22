@@ -74,6 +74,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     public void addMailModel(MailModel mailModel) {
         mailModelDAO.save(mailModel);
     }
+    
 
     public MailModel findMailModelByMailId(String mailId) {
         return mailModelDAO.findByMailId(mailId).orElse(null);
@@ -103,6 +104,8 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         var stringBuilder = new StringBuilder();
         if (Objects.nonNull(mailModel) && otp.equals(mailModel.getOtp())) {
             stringBuilder.append("ACCEPTED");
+            mailModel.setOtp("");
+            addMailModel(mailModel);
         }
         return stringBuilder.toString();
     }
