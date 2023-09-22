@@ -9,3 +9,4 @@ aws dynamodb create-table \
 	--provisioned-throughput \
 	ReadCapacityUnits=5,WriteCapacityUnits=5 \
 	--region us-east-1
+
