@@ -18,7 +18,7 @@ public class MailModelController {
         return mailModelDao.findById(emailId).get();
     }
     
-    @PostMapping(value = "/user/{id}", consumes = "application/json")
+    @PostMapping(value = "/profile/", consumes = "application/json")
     public MailModel addProfile(@RequestBody MailModel mailModel){
         return mailModelDao.save(mailModel);
     }

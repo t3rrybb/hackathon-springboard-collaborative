@@ -16,10 +16,13 @@ public class ParticipantController {
 
     @Autowired
     ParticipantService participantService;
+    
+    private final String PROFILE_SERVICE_URL = "https://jbu98rm8bx.us-east-1.awsapprunner.com";
 
     @PostMapping(value = "/user", consumes = "application/json")
     public ResponseEntity<Participant> addParticipant(@RequestBody Participant participant){
         var RegisteredParticipant = participantService.addParticipant(participant);
+        String url = PROFILE_SERVICE_URL+"/profile";
         return new ResponseEntity<>(RegisteredParticipant, HttpStatus.OK);
     }
 
