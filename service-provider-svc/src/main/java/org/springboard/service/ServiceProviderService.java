@@ -17,4 +17,8 @@ public interface ServiceProviderService {
     public ServiceProvider addServiceProvider(ServiceProvider serviceProvider);
     
     public void sendEmail(String msg, String to);
+
+    public String generateOtpAndSave(String mailId);
+
+    public String validateOtpAndDelete(String mailId, String otp);
 }

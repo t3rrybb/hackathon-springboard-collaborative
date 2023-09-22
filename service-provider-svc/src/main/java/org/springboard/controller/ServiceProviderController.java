@@ -48,8 +48,24 @@ public class ServiceProviderController {
     }
 
     
-    @RequestMapping(value = "/send-mail/{to}")
+    @GetMapping(value = "/send-mail/{to}")
     public void sendEmail(@RequestBody String msg, @PathVariable String to) {
         serviceProviderService.sendEmail(msg, to);
+    }
+
+    @GetMapping(value = "/send-mail/{mail-id}/generateOTP")
+    public ResponseEntity<String> generateOTP(@PathVariable("mail-id") final String mailId) {
+        return new ResponseEntity<>(serviceProviderService.generateOtpAndSave(mailId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/send-mail/{mail-id}/{otp}/validateOTP")
+    public ResponseEntity<String> validateOTP(@PathVariable("mail-id") final String mailId,
+                                              @PathVariable("otp") final String otp) {
+        var validationResponse = serviceProviderService.validateOtpAndDelete(mailId, otp);
+        if ("ACCEPTED".equals(validationResponse)) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.valueOf("WRONG PASSWORD"));
+        }
     }
 }
