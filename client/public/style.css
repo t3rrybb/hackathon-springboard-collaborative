@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  animation: fadein 3s;
+  overflow-x: hidden;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px white;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #228be6;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #228be6;
+  }
+}
+
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+
+#google_translate_element {
+  height: 0;
+  visibility: hidden;
+}
+
+.firebase-emulator-warning {
+  opacity: 0.4;
+  pointer-events: none;
+}
