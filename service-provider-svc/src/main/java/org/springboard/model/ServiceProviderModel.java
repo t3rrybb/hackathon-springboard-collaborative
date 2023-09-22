@@ -74,8 +74,13 @@ public class ServiceProviderModel {
         if(Objects.nonNull(serviceProvider.getPhone()))
             this.phone = serviceProvider.getPhone();
 
-        if(Objects.nonNull(serviceProvider.getServices()))
-            this.services = serviceProvider.getServices();
+        if (Objects.nonNull(serviceProvider.getServices())){
+            if(Objects.nonNull(this.services)){
+                this.services.addAll(serviceProvider.getServices());
+            }else{
+                this.services = serviceProvider.getServices();
+            }
+        }
 
         if(Objects.nonNull(serviceProvider.getActive()))
             this.active = serviceProvider.getActive();
