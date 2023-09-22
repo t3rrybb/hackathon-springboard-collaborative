@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Objects;
 
+@CrossOrigin
 @RestController
 public class UserQueueController {
 
@@ -41,20 +42,20 @@ public class UserQueueController {
     }
 
     @PostMapping(path="/userQueue", consumes = "application/json")
-    public ResponseEntity<UserQueue> addUserQueue(@RequestBody UserQueue userQueue){
+    public ResponseEntity<UserQueue> updateQueuedUserPost(@RequestBody UserQueue userQueue){
         var queuedUser = userQueueService.addUserQueueData(userQueue);
         return new ResponseEntity<>(queuedUser, HttpStatus.OK);
     }
 
     @PutMapping(path="/userQueue/{id}", consumes = "application/json")
-    public ResponseEntity<String> updateQueuedUser(@RequestBody UserQueue userQueue,
-                                                         @PathVariable("id") final String id){
+    public ResponseEntity<String> updateQueuedUserById(@RequestBody UserQueue userQueue,
+                                                       @PathVariable("id") final String id){
         var queuedUser = userQueueService.updateQueuedUser(userQueue, id);
         return new ResponseEntity<>(queuedUser, HttpStatus.OK);
     }
 
     @DeleteMapping(path="/userQueue/{id}")
-    public ResponseEntity<String> deleteQueuedUser(@PathVariable("id") final String id){
+    public ResponseEntity<String> deleteQueuedUserById(@PathVariable("id") final String id){
         var deletedQueuedUser = userQueueService.deleteQueuedUser(id);
         return new ResponseEntity<>(deletedQueuedUser, HttpStatus.OK);
     }
