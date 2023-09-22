@@ -1,4 +1,6 @@
-package org.springboard.pojo;
+package org.springboard.model;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,36 +17,43 @@ public class Participant {
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String userId;
     
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String firstName;
     
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String lastName;
     
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String email;
     
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String phone;
     
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String status;
     
     @Getter
     @NonNull
     @Setter
+    @JsonDeserialize
     String DOB;
     
 }
