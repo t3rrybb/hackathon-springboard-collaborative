@@ -3,12 +3,7 @@ import {
 	Card,
 	List,
 	Text,
-	Badge,
-	Button,
-	Group,
 	Flex,
-	Space,
-	Container,
 	Center,
     Box,
     Title,
@@ -16,8 +11,10 @@ import {
     Avatar,
     ActionIcon,
 } from "@mantine/core";
-
+import { useLoading } from '../../hooks/useLoading';
 import {IconCheck, IconX, IconMail,IconPhone} from '@tabler/icons-react';
+import { useEffect, useState } from "react";
+import { getApplicants } from "../../utils/requests";
 
 const useStyles = createStyles((theme) => ({
 	list: {
@@ -69,6 +66,25 @@ const data = [
 ];
 export function ApplicationQueue() {
 	const { classes } = useStyles();
+    const [data, setData] = useState([]);
+    const { request } = useLoading();
+
+    const getData = async () => {
+        try {
+          const response = await request(getApplicants);
+          if (response.status === 200) {
+            setData(response.data);
+          }
+        } catch (error) {
+           console.log(error);
+        }
+      };
+
+      
+    useEffect(()=>{
+      getData()
+    },[]);
+
 	return (
         <>
       <Center> <Title>Applicants</Title> </Center> 
@@ -76,6 +92,7 @@ export function ApplicationQueue() {
 			{data.map((element) => (
              <Center style={{display: 'flex'}}  >
 						<Card 
+                            key={element.id}
                             w='100%'
                             mt={30}
 							className={classes.card}
@@ -102,7 +119,7 @@ export function ApplicationQueue() {
 
 								<Anchor  href={`telto:${element.email}`}  className={classes.det}  size="sm" c="dimmed">
                                    <IconPhone/>
-									{element.phonenumber}
+									{element.mobileNumber}
 								</Anchor>
 							</Box>
 

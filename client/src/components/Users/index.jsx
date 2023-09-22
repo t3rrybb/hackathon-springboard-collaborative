@@ -143,7 +143,7 @@ export function Users() {
 								</Box>
                                 <Box className={classes.det} size="sm" c="dimmed">
                                     <IconList/>
-									{element.email}
+									service1, service2
 								</Box>
 							</Flex>
                             </Accordion.Panel>

@@ -18,7 +18,9 @@ import {
   CAPACITY,
   ON_DUTY,
   HOSPITAL,
-  LIST_STAFFS
+  LIST_STAFFS,
+  QUEUE,
+  PARTICIPANT
 } from './urls';
 import { appCheck } from './firebase';
 
@@ -206,97 +208,43 @@ export const addHospital = async ({
   });
 };
 
-export const addStaff = async ({
-  staffId,
-  isActive
+export const getApplicants = async () => {
+  return axios.get(`${QUEUE}`);
+};
+
+export const addApplicants = async ({
+    name,
+    email,
+    mobileNumber
 }) => {
-  const token = await getIDToken();
-  return axios.post(`${STAFF}`, {
-    staffId,
-    isActive
-  }, {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': token
-    }
-  });
+    return axios.post(`${QUEUE}}`,{
+        name,
+        email,
+        mobileNumber,
+        status: 'QUEUED'
+    });
+  };
+  
+
+export const getParticipants = async () => {
+    return axios.get(`${PARTICIPANT}`);
 };
 
-export const updateStaff = async (
-  staffId,
-  isActive
-) => {
-  const token = await getIDToken();
-  return axios.put(`${STAFF}`, {
-    staffId,
-    isActive
-  }, {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': token
-    }
-  });
-};
-
-export const updateCapacity = async (
-  capacity
-) => {
-  const token = await getIDToken();
-  return axios.put(`${CAPACITY}`, {
-    capacity
-  }, {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': token
-    }
-  });
-};
-
-export const getOnDutyStaff = async () => {
-  const token = await getIDToken();
-  return axios.get(`${ON_DUTY}`, {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': token
-    }
-  });
-};
-
-export const transferPatient = async (
-  patient,
-  toHospital
-) => {
-  const token = await getIDToken();
-  return axios.post(`${LIST_PATIENTS_URL}`, {
-    patient, toHospital
-  }, {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': token
-    }
-  });
-};
-
-export const listUnAssignedStaffs = async () => {
-  const token = await getIDToken();
-  return axios.get(`${LIST_STAFFS}`, {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': token
-    }
-  });
-};
-
-// discharge patient
-export const dischargePatientRequest = async (id, comments) => axios.post(
-  `${GET_PATIENT_URL}/${id}/discharge`,
-  {
-    comments
-  },
-  {
-    ...requestConfig,
-    headers: {
-      'X-Token-Firebase': await getIDToken()
-    }
-  }
-);
+  
+export const addParticipant = async ({
+    firstName,
+    lastName,
+    email,
+    phone,
+    dateOfBirth
+}) => {
+    return axios.post(`${PARTICIPANT}`,{
+        firstName,
+        lastName,
+        email,
+        phone,
+        dateOfBirth,
+        status: 'ACTIVE'
+    });
+  };
+  

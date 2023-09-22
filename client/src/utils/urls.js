@@ -29,4 +29,10 @@ export const ON_DUTY = `${BACKEND_URL}/admin/onduty`;
 
 export const TRANSFER_PATIENT = `${BACKEND_URL}/patient/transferpatient`;
 
-export const LIST_STAFFS = `${BACKEND_URL}/admin/liststaffs`;
+export const VALIDATE_OTP = `${BACKEND_URL}/send-mail/{mail-id}/{otp}/validateOTP`;
+
+export const SEND_OTP = `${BACKEND_URL}/send-mail/{mail-id}/generateOTP`;
+
+export const QUEUE = `${BACKEND_URL}/userQueue`;
+
+export const PARTICIPANT = `${BACKEND_URL}/participants`;

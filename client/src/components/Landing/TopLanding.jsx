@@ -85,13 +85,13 @@ export function TopLanding() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              Empowering Safe Deliveries with
-              {' '}
-              <span className={classes.highlight}>ePartogram</span>
+                Empowering Charity with
+              <span className={classes.highlight}>Collaborative</span>
+              Effort
             </Title>
             <Text color="dimmed" mt="md">
-              Experience the Future of Maternal Care with ePartogram - the
-              Digital Solution for Better Birth Outcomes.
+            Charity organization that focuses on supporting and empowering people, especially young people and those facing barriers to employment,
+            to achieve their potential and gain sustainable employment. Founded in 1989, Springboard has established itself as a leading charity in the field of employment, education, and skills development.
             </Text>
             <Group mt={30}>
               <Button
@@ -109,7 +109,7 @@ export function TopLanding() {
               autoplay
               loop
               mode="normal"
-              src="https://assets2.lottiefiles.com/packages/lf20_nw19osms.json"
+              src="https://lottie.host/dcf66ff6-9e07-4fa0-9e6b-3cf3cce347be/gyceUICMhg.json"
             />
           </div>
         </div>
