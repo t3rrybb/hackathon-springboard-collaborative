@@ -1,14 +1,18 @@
 package org.springboard.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
 public enum UserStatus {
     QUEUED("QUEUED"),
     APPROVED("APPROVED"),
     REJECTED("REJECTED");
 
     private final String state;
+
+    public String getState() {
+        return state;
+    }
+
+    UserStatus(String state) {
+        this.state = state;
+
+    }
 }
